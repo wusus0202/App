@@ -1,0 +1,90 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user-specific data and preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Unique identifier for the user." },
+        "email": { "type": "string", "format": "email", "description": "User's email address." },
+        "displayName": { "type": "string", "description": "User's display name." },
+        "photoURL": { "type": "string", "format": "uri", "description": "URL to user's profile picture." },
+        "points": { "type": "integer", "description": "Total study points earned." },
+        "streak": { "type": "integer", "description": "Current daily study streak." },
+        "language": { "type": "string", "description": "UI language preference." },
+        "aiLanguage": { "type": "string", "description": "AI response language preference." }
+      },
+      "required": ["uid", "email"]
+    },
+    "Task": {
+      "title": "Study Task",
+      "description": "Represents a student's study task or homework.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "UID of the task owner." },
+        "title": { "type": "string", "description": "Task title." },
+        "description": { "type": "string", "description": "Task description." },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"], "description": "Task priority level." },
+        "category": { "type": "string", "description": "Task category (e.g., school, exam, project)." },
+        "due_date": { "type": "string", "format": "date", "description": "Task due date." },
+        "completed": { "type": "boolean", "description": "Whether the task is completed." },
+        "points_earned": { "type": "integer", "description": "Points earned for completing this task." },
+        "rating": { "type": "integer", "description": "User's self-rating of the task (1-5)." },
+        "reflection": { "type": "string", "description": "User's reflection on the task." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the task was created." }
+      },
+      "required": ["uid", "title", "completed"]
+    },
+    "CalendarEvent": {
+      "title": "Calendar Event",
+      "description": "Events displayed on the student's calendar.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "UID of the event owner." },
+        "title": { "type": "string", "description": "Event title." },
+        "notes": { "type": "string", "description": "Event notes." },
+        "date": { "type": "string", "format": "date", "description": "Event date." },
+        "type": { "type": "string", "enum": ["phase", "deadline", "manual"], "description": "Type of event." },
+        "taskId": { "type": "string", "description": "Optional ID of the related task." }
+      },
+      "required": ["uid", "title", "date", "type"]
+    },
+    "Post": {
+      "title": "Forum Post",
+      "description": "A post in the student community forum.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "UID of the post author." },
+        "authorName": { "type": "string", "description": "Display name of the author." },
+        "authorPhoto": { "type": "string", "format": "uri", "description": "Profile photo URL of the author." },
+        "title": { "type": "string", "description": "Post title." },
+        "content": { "type": "string", "description": "Post content." },
+        "category": { "type": "string", "description": "Post category." },
+        "likesCount": { "type": "integer", "description": "Number of likes." },
+        "commentsCount": { "type": "integer", "description": "Number of comments." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the post was created." }
+      },
+      "required": ["uid", "title", "content", "createdAt"]
+    },
+    "Comment": {
+      "title": "Forum Comment",
+      "description": "A comment on a forum post.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "UID of the comment author." },
+        "authorName": { "type": "string", "description": "Display name of the author." },
+        "authorPhoto": { "type": "string", "format": "uri", "description": "Profile photo URL of the author." },
+        "content": { "type": "string", "description": "Comment content." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the comment was created." }
+      },
+      "required": ["uid", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles." },
+    "/tasks/{taskId}": { "schema": "Task", "description": "Student study tasks." },
+    "/calendar_events/{eventId}": { "schema": "CalendarEvent", "description": "Calendar events and study phases." },
+    "/posts/{postId}": { "schema": "Post", "description": "Forum posts." },
+    "/posts/{postId}/comments/{commentId}": { "schema": "Comment", "description": "Comments on forum posts." }
+  }
+}

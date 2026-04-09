@@ -1,0 +1,7 @@
+{
+  "name": "Focus: AI Study Ecosystem",
+  "description": "A mobile-first, AI-native study management ecosystem for high school students featuring task management, AI study phases, forum, and college planning.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
